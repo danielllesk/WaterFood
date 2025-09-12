@@ -1,62 +1,46 @@
-# Technical Documentation (journal)
+# Technical Documentation
 
-## How to use this doc
-Whenever you merge a feature to `develop`/`main`, add a dated entry.
+## Step 1 — Environment and Repo Hygiene
+- What was added
+  - `.gitignore`
+  - `.env.example` (Firebase, Google Places, app config)
+  - Initial README updates
+- How it works
+  - `.gitignore` prevents committing local/build/secrets artifacts
+  - `.env.example` lists all required env vars; copy to `.env`
+- Why we added it
+  - Establish clean repo hygiene and a clear setup path for collaborators
 
----
+## Step 2 — Terminology Refactor (Movies → Restaurants)
+- What was added/changed
+  - UI copy and component props switched to restaurant domain
+  - Type updates in `app/types.ts`:
+    - `UserWatched` → `UserAteAt`
+    - `Movie` → `Restaurant`
+    - IDs switched to `restaurantID` where applicable
+  - Buttons and profile components updated (watched → ate at)
+- How it works
+  - Components read/write `ateAt` and `favourites` arrays in Firestore user docs
+  - UI reflects “Ate At” and “Restaurants” across navigation and cards
+- Why we added it
+  - Align the app with the restaurant logging use case before wiring new data sources
 
-## [2024-12-19] Project Setup: Sprint 0 - Environment & Documentation
-- Author: AI Assistant
-- Summary: Initial setup of WaterFood project transformation from Letterboxd clone
-- Files changed: 
-  - Created `.gitignore` with comprehensive exclusions
-  - Created `.env.example` with Firebase, Google Places, and app config templates
-  - Created `TECHNICAL_DOCUMENTATION.md` (this file)
-  - Updated `README.md` to reflect project transformation
-- DB changes: None
-- API endpoints: None
-- Tests: None
-- Notes / follow-ups: 
-  - ✅ Tested baseline app: Build fails without environment variables (expected)
-  - ✅ Dependencies installed successfully (472 packages)
-  - ✅ ESLint config issue identified (react-app config missing)
-  - Ready to begin Sprint 1 (terminology refactoring)
-  - Current app uses TMDB API for movies, will be replaced with Google Places API
-  - Firebase configuration needs to be updated to match new environment variable names
-
----
-
-## Current Project State (Baseline)
-- **Tech Stack**: Next.js 15.2.0, React 18.2.0, TypeScript, TailwindCSS, Firebase 9.21.0
-- **Current Features**: 
-  - Movie search and discovery (TMDB API)
-  - User authentication (Firebase Auth)
-  - User profiles with watched/favorites lists
-  - Movie reviews and ratings
-  - Social features (following users, feeds)
-- **Data Model**: Users, Movies, Reviews, Favorites, Watched lists
-- **Key Components**: 
-  - Home page with popular movies
-  - Movie detail pages
-  - User profiles
-  - Search functionality
-  - Authentication system
-
-## Transformation Plan
-Converting from movie-focused Letterboxd clone to restaurant-focused WaterFood app:
-1. Replace movie terminology with restaurant terminology
-2. Replace TMDB API with Google Places API
-3. Implement aggressive caching to stay within 10k API calls/month
-4. Add restaurant-specific features (Google + community ratings, etc.)
-5. Maintain social features but adapt for restaurant context
-
----
-
-## [YYYY-MM-DD] Feature: <short title>
-- Author:
-- Summary:
-- Files changed:
-- DB changes:
-- API endpoints:
-- Tests:
-- Notes / follow-ups:
+## Step 3 — Restaurant Data Model + Caching Layer
+- What was added
+  - `GET /api/place/[id]` API route (Next.js route handler)
+  - `GET /api/search` API route
+  - Firestore collections: `restaurants`, `cached_searches`, `broke_boy_monitor`
+- How it works
+  - Place Details
+    - Check Firestore `restaurants/{place_id}`
+      - If fresh (lastFetched < PLACE_DETAILS_TTL_DAYS), return cached
+      - Else, enforce broke boy limitation (monthly counter in `broke_boy_monitor`), call Google Places, persist fresh copy, return
+  - Search
+    - Normalize query + location; look up `cached_searches/{queryHash}`
+      - If fresh (lastFetched < SEARCH_CACHE_TTL_DAYS), return cached
+      - Else, enforce broke boy limitation, call Places Autocomplete, cache normalized results, return
+  - Broke boy limitation
+    - Monthly usage tracked in `broke_boy_monitor/monthly_usage.counters.totalRequests`
+    - When usage >= SAFE_MONTHLY_GOOGLE_REQUESTS, API returns 429 with friendly message
+- Why we added it
+  - Minimize external calls and stay within the broke boy limitation while keeping the app responsive via cached responses
