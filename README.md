@@ -6,7 +6,7 @@
 - Social restaurant logging and discovery app for Waterloo region
 - Search, save and review restaurants using Google Places API with aggressive caching
 - Implement Google Auth using Firebase Auth and store all users' information in Firestore DB
-- Stay within 10,000 Google Places API requests/month through intelligent caching
+- Stay within 10,000 Google Places API requests/month (broke boy limitation) through intelligent caching
 - **Original**: Forked from [ClonnerboxD Letterboxd Clone](https://github.com/janaiscoding/letterboxd-clone)
 
 ## Development Status
@@ -46,7 +46,7 @@ cp .env.example .env
 Required environment variables:
 - Firebase configuration (for authentication and database)
 - Google Places API key (for restaurant data)
-- App configuration (quota limits, cache TTL)
+- App configuration (broke boy limitation limits, cache TTL)
 
 See `.env.example` for complete list of required variables.
 
@@ -71,7 +71,7 @@ npm run dev
 - **Dual Ratings**: Display both Google ratings and community app ratings
 - **Social Feed**: Follow users and see their restaurant activity
 - **Trending**: Discover popular restaurants based on community activity
-- **Caching**: Intelligent caching to stay within Google Places API limits
+- **Caching**: Intelligent caching to stay within Google Places API broke boy limitation
 
 # Built with
 

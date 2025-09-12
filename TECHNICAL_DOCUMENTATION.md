@@ -44,3 +44,18 @@
     - When usage >= SAFE_MONTHLY_GOOGLE_REQUESTS, API returns 429 with friendly message
 - Why we added it
   - Minimize external calls and stay within the broke boy limitation while keeping the app responsive via cached responses
+
+## Step 4 — Search & Autocomplete UX
+- What was added
+  - `RestaurantSearchInput` component with debounced autocomplete
+  - Updated `SearchInputDesktop` and `SearchInputMobile` to use new component
+  - Keyboard navigation (arrow keys, enter, escape) for suggestions
+  - Click-outside-to-close behavior
+- How it works
+  - 500ms debounced search calls to `/api/search` (prevents rapid API calls while typing)
+  - Shows up to 5 restaurant suggestions in dropdown
+  - Caches search results in `cached_searches` collection (7-day TTL)
+  - Clicking suggestion navigates to `/restaurant/{place_id}`
+  - Enter without selection navigates to `/results?searchTerm=...`
+- Why we added it
+  - Provide smooth restaurant discovery UX while respecting broke boy limitation through aggressive caching
