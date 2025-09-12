@@ -33,9 +33,9 @@ export const UserCard = ({ user }: { user: User }) => {
             </span>
           </div>
           <div className="text-sh-grey flex gap-2 text-sm">
-            <span> Watched</span>
+            <span> Ate At</span>
             <span className="text-p-white font-bold">
-              {user.watched.length}{" "}
+              {user.ateAt.length}{" "}
             </span>
           </div>
         </div>

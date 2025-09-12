@@ -35,7 +35,7 @@ export default function Page() {
       (a, b) => toDate(b?.timestamp).getTime() - toDate(a?.timestamp).getTime()
     );
 
-    const movieIds = [...new Set(reviews.map((review) => review.movieID))];
+    const movieIds = [...new Set(reviews.map((review) => review.restaurantID))];
 
     setAllReviews(sorted);
     // initial 6 reviews
@@ -46,7 +46,7 @@ export default function Page() {
     fetchMoviesDetails(movieIds);
   };
 
-  const fetchMoviesDetails = async (movieIds: number[]) => {
+  const fetchMoviesDetails = async (movieIds: string[]) => {
     setIsLoading(true);
     try {
       const movieData = await Promise.all(
@@ -159,23 +159,22 @@ export default function Page() {
                 >
                   <MovieReviewCompact review={review} key={i} />
 
-                  {movieMap[review.movieID] && (
+                  {movieMap[review.restaurantID] && (
                     <div className="flex flex-col items-end justify-end">
                       <Link
-                        href={"/movie/" + review.movieID}
+                        href={"/restaurant/" + review.restaurantID}
                         className="text-sh-grey hover:text-hov-blue pb-2"
                       >
-                        {movieMap[review.movieID].title}
+                        {movieMap[review.restaurantID].name}
                       </Link>
-                      <Link href={"/movie/" + review.movieID}>
+                      <Link href={"/restaurant/" + review.restaurantID}>
                         <Image
                           className="block max-h-[120px] max-w-[80px] rounded border"
                           src={
-                            "https://image.tmdb.org/t/p/w500/" +
-                            movieMap[review.movieID]?.poster_path
+                            movieMap[review.restaurantID]?.photos?.[0] || "/placeholder-restaurant.jpg"
                           }
                           alt={
-                            "Movie title for" + movieMap[review.movieID]?.title
+                            "Restaurant title for" + movieMap[review.restaurantID]?.name
                           }
                           height={300}
                           width={300}

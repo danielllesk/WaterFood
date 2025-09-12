@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import FavouriteButton from "../Buttons/FavoriteButton";
 import { WatchButton } from "../Buttons/WatchButton";
-import { Movie, UserFavourite, UserWatched } from "app/types";
+import { Restaurant, UserFavourite, UserAteAt } from "app/types";
 
 export const ProfileMoviePoster = ({
   watched,
@@ -12,7 +12,7 @@ export const ProfileMoviePoster = ({
   movieId,
   onEvent,
 }: {
-  watched: UserWatched[];
+  watched: UserAteAt[];
   favourites: UserFavourite[];
   movieId: string;
   onEvent: () => void;
@@ -20,16 +20,16 @@ export const ProfileMoviePoster = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const [movie, setMovie] = useState<Movie>({} as Movie);
+  const [movie, setMovie] = useState<Restaurant>({} as Restaurant);
 
   const [isFavourite, setIsFavourite] = useState(false);
   const [isWatched, setIsWatched] = useState(false);
 
   const setInitialMovieStatuses = () => {
-    const isFavorite = favourites.some((movies) => movies?.movieID === movieId);
+    const isFavorite = favourites.some((restaurants) => restaurants?.restaurantID === movieId);
     setIsFavourite(isFavorite);
 
-    const isWatched = watched.some((movies) => movies?.movieID === movieId);
+    const isWatched = watched.some((restaurants) => restaurants?.restaurantID === movieId);
     setIsWatched(isWatched);
   };
 
@@ -63,8 +63,8 @@ export const ProfileMoviePoster = ({
       <Link href={"/movie/" + movie.id}>
         <Image
           className="block max-h-[120px] max-w-[80px]  rounded border md:max-h-[220px] md:max-w-[140px] "
-          src={"https://image.tmdb.org/t/p/w500/" + movie.poster_path}
-          alt={"Title for" + movie.title}
+          src={movie.photos?.[0] || "/placeholder-restaurant.jpg"}
+          alt={"Title for" + movie.name}
           loading="lazy"
           width={300}
           height={300}
@@ -77,7 +77,7 @@ export const ProfileMoviePoster = ({
         >
           <FavouriteButton
             id={movie.id}
-            title={movie.title}
+            title={movie.name}
             isFavourite={isFavourite}
             setIsFavourite={setIsFavourite}
             onEvent={onEvent}
@@ -85,7 +85,7 @@ export const ProfileMoviePoster = ({
 
           <WatchButton
             id={movie.id}
-            title={movie.title}
+            title={movie.name}
             isWatched={isWatched}
             setIsWatched={setIsWatched}
             onEvent={onEvent}

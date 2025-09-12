@@ -55,8 +55,8 @@ export const ProfileBio = ({
           <p className=" sans-serif text-xs ">FAVOURITES</p>
         </div>
         <div className="text-p-white flex flex-col items-center justify-center border-l border-solid border-[#6677884f] px-3">
-          <h1 className="text-2xl font-bold">{user?.watched?.length}</h1>
-          <p className="sans-serif text-xs">WATCHED</p>
+          <h1 className="text-2xl font-bold">{user?.ateAt?.length}</h1>
+          <p className="sans-serif text-xs">ATE AT</p>
         </div>
       </div>
     </div>

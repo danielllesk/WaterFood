@@ -65,18 +65,18 @@ export const WatchButton = ({
 
   return (
     <>
-      <div onClick={onAteAt} className="p-2">
+      <div onClick={onWatched} className="p-2">
         <Image
-          src={isAteAt ? remWatched : watchIcon}
+          src={isWatched ? remWatched : watchIcon}
           width={20}
           height={20}
           alt={
-            isAteAt
+            isWatched
               ? "Remove restaurant from ate at icon"
               : "Add restaurant to ate at icon"
           }
           aria-label={
-            isAteAt
+            isWatched
               ? "Remove restaurant from ate at list"
               : "Add restaurant to ate at list"
           }

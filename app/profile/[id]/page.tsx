@@ -8,7 +8,7 @@ import { ProfileBio } from "app/components/Profile/ProfileBio";
 import { LayoutNavbar } from "app/components/Navigation/LayoutNavbar";
 import { ProfileMoviesHighlight } from "app/components/Profile/ProfileMoviesHighlight";
 import { ProfileReviews } from "app/components/Profile/ProfileReviews";
-import { User, UserFavourite, UserReview, UserWatched } from "app/types";
+import { User, UserFavourite, UserReview, UserAteAt } from "app/types";
 import { Footer } from "app/components/Navigation/Footer";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
@@ -20,7 +20,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
   const [reviews, setReviews] = useState<UserReview[]>([]);
   const [favourites, setFavourites] = useState<UserFavourite[]>([]);
-  const [watched, setWatched] = useState<UserWatched[]>([]);
+  const [watched, setWatched] = useState<UserAteAt[]>([]);
 
   const router = useRouter();
 
@@ -33,7 +33,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       setUser(user);
 
       setReviews(user.reviews.reverse().slice(0, 6));
-      setWatched(user.watched);
+      setWatched(user.ateAt);
       setFavourites(user.favourites);
     }
 
@@ -45,7 +45,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     if (userSnap.exists()) {
       const user = userSnap.data() as User;
 
-      setWatched(user.watched);
+      setWatched(user.ateAt);
       setFavourites(user.favourites);
     }
   };
@@ -87,7 +87,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                 movies={watched}
                 watched={watched}
                 favourites={favourites}
-                type="watched"
+                type="ate at"
                 onEvent={onEvent}
               />
             </div>
