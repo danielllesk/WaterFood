@@ -40,7 +40,7 @@ export const WatchButton = ({
     const userRef = doc(db, "users", userId);
 
     await updateDoc(userRef, {
-      watched: arrayUnion({ movieID: id }),
+      ateAt: arrayUnion({ restaurantID: id }),
     }).then(() => {
       setIsWatched(true);
       createWatchedPopup(title, PopupAction.WATCHED);
@@ -56,7 +56,7 @@ export const WatchButton = ({
     const userId = auth.currentUser.uid;
     const userRef = doc(db, "users", userId);
     await updateDoc(userRef, {
-      watched: arrayRemove({ movieID: id }),
+      ateAt: arrayRemove({ restaurantID: id }),
     }).then(() => {
       setIsWatched(false);
       createWatchedPopup(title, PopupAction.REMOVED);
@@ -65,20 +65,20 @@ export const WatchButton = ({
 
   return (
     <>
-      <div onClick={onWatched} className="p-2">
+      <div onClick={onAteAt} className="p-2">
         <Image
-          src={isWatched ? remWatched : watchIcon}
+          src={isAteAt ? remWatched : watchIcon}
           width={20}
           height={20}
           alt={
-            isWatched
-              ? "Remove movie from watched icon"
-              : "Add movie to watched icon"
+            isAteAt
+              ? "Remove restaurant from ate at icon"
+              : "Add restaurant to ate at icon"
           }
           aria-label={
-            isWatched
-              ? "Remove movie from watched list"
-              : "Add movie to watched list"
+            isAteAt
+              ? "Remove restaurant from ate at list"
+              : "Add restaurant to ate at list"
           }
         />
       </div>

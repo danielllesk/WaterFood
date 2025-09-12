@@ -10,11 +10,11 @@ export const PopularMovies = ({ movies }: { movies: any }) => {
     <>
       <div className="section-heading border-b-grey text-sh-grey mb-3 flex justify-between border-b border-solid text-xs">
         <p className="hover:text-hov-blue text-sm hover:cursor-pointer">
-          POPULAR ON CLONNERBOXD
+          POPULAR ON WATERFOOD
         </p>{" "}
-        {!path.includes("films") && (
+        {!path.includes("restaurants") && (
           <Link
-            href={"/films"}
+            href={"/restaurants"}
             className="hover:text-hov-blue text-[11px] hover:cursor-pointer"
           >
             MORE
@@ -24,7 +24,7 @@ export const PopularMovies = ({ movies }: { movies: any }) => {
 
       <div className="mb-10 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {!movies &&
-          "No populars available at the moment. Please try again later."}
+          "No popular restaurants available at the moment. Please try again later."}
 
         {movies &&
           movies

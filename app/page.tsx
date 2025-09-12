@@ -12,19 +12,20 @@ export default function Page() {
   const [movies, setMovies] = useState<any>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const fetchPopularMovies = async () => {
+  const fetchPopularRestaurants = async () => {
+    // TODO: Replace with Google Places API call
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
     );
 
     if (!res.ok) {
-      console.error("error fetching popular movies");
+      console.error("error fetching popular restaurants");
       return;
     }
 
     const data = await res.json();
 
-    setMovies(data.results);
+    setMovies(data.results); // TODO: Rename to restaurants
   };
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function Page() {
       }
     });
 
-    fetchPopularMovies();
+    fetchPopularRestaurants();
   }, []);
   return (
     <>

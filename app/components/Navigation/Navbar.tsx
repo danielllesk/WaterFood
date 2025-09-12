@@ -19,8 +19,8 @@ import logoMobile from "@/assets/logoMobile.png";
 const menuLinks = [
   {
     id: 1,
-    name: "FILMS",
-    href: "/films",
+    name: "RESTAURANTS",
+    href: "/restaurants",
   },
   // {
   //   id: 2,

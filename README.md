@@ -1,19 +1,25 @@
-# ClonnerboxD - Letterboxd Clone
+# WaterFood - Social Restaurant Discovery Platform
 
 ## Project's Scope
 
-- Fully responsive clone of a popular social movie tracking and reviewing platform
-- Search, save and review your favourite movies, fetched from The Movie Database ’s API
-- Implement Google Auth using BaaS Firebase Auth and store all users' information in Firestore DB
-- Live preview on [Vercel's Hosting](https://clonnerboxd.vercel.app/).
+- **TRANSFORMATION IN PROGRESS**: Converting from Letterboxd clone to restaurant-focused social platform
+- Social restaurant logging and discovery app for Waterloo region
+- Search, save and review restaurants using Google Places API with aggressive caching
+- Implement Google Auth using Firebase Auth and store all users' information in Firestore DB
+- Stay within 10,000 Google Places API requests/month through intelligent caching
+- **Original**: Forked from [ClonnerboxD Letterboxd Clone](https://github.com/janaiscoding/letterboxd-clone)
 
-## Live Demo
+## Development Status
 
-### On Browser
+**Currently in Sprint 0**: Environment setup and documentation
+- ✅ Created `.gitignore` and `.env.example`
+- ✅ Set up technical documentation
+- 🔄 Testing baseline functionality
+- 📋 Next: Sprint 1 - Terminology refactoring (movies → restaurants)
+
+### Original Demo (Letterboxd Clone)
 
 ![Gif preview of the Clonnerboxd](./assets/clonnerboxd-preview-desktop.gif)
-
-### On Mobile
 
 ![Gif preview of the Clonnerboxd on mobile](./assets/clonnerboxd-mobile-preview.gif)
 
@@ -29,21 +35,20 @@ npm install
 
 ### Prerequisites for running your own version
 
-Get an API key from [TMDB](https://developer.themoviedb.org/reference/intro/getting-started)
+1. **Firebase Setup**: Create a new project from [Firebase Console](https://console.firebase.google.com/u/0/)
+2. **Google Places API**: Get an API key from [Google Cloud Console](https://console.cloud.google.com/)
+3. **Environment Variables**: Copy `.env.example` to `.env` and fill in your keys
 
-Create a new project from [Firebase Console](https://console.firebase.google.com/u/0/) and connect it
-
-Create a `.env` file at the root of the repository with the following values for the [firebase](https://firebase.google.com/docs/web/learn-more#config-object) and API key:
-
+```bash
+cp .env.example .env
 ```
-NEXT_PUBLIC_API_KEY = "your-firebase-api-key"
-NEXT_PUBLIC_APP_ID = "your-firebase-app-id"
-NEXT_PUBLIC_MESSAGING_ID = "your-firebase-messaging-id"
-NEXT_PUBLIC_AUTH_DOMAIN = "your-firebase-auth-domain-id"
-NEXT_PUBLIC_PROJECT_ID = "your-firebase-project-id"
-NEXT_PUBLIC_STORAGE_BUCKET = "your-firebase-storage-bucket"
-NEXT_PUBLIC_TMDB_API_KEY="your-TMDB-api-key"
-```
+
+Required environment variables:
+- Firebase configuration (for authentication and database)
+- Google Places API key (for restaurant data)
+- App configuration (quota limits, cache TTL)
+
+See `.env.example` for complete list of required variables.
 
 ```
 npm run dev
@@ -51,6 +56,7 @@ npm run dev
 
 ## Project Details & Description
 
+### Current State (Letterboxd Clone)
 - On **Homepage** you can see the current popular movies, fetched from [The Movie Database](https://www.themoviedb.org/).
 - On **Profile** you can see what movies you liked and watched, as well as your most recent reviews.
 - On **Films** page you can filter by different browsing categories: years, ratings and genres!
@@ -58,6 +64,14 @@ npm run dev
 - On **Reviews** you can see all the reviews on the platform.
 - On **Settings** you can edit your display name and your bio (which will update your profile).
 - In the navbar you can **search** for any movie to add to your collection.
+
+### Planned Features (WaterFood)
+- **Restaurant Discovery**: Search and discover restaurants in Waterloo region
+- **Social Logging**: Log "Ate At" restaurants, maintain "To Try" lists
+- **Dual Ratings**: Display both Google ratings and community app ratings
+- **Social Feed**: Follow users and see their restaurant activity
+- **Trending**: Discover popular restaurants based on community activity
+- **Caching**: Intelligent caching to stay within Google Places API limits
 
 # Built with
 
@@ -76,5 +90,11 @@ npm run dev
 
 ## Sources, Materials, Copyright
 
-- This is a [Letterboxd](https://letterboxd.com/) website replica
-- API used: [The Movie Database](https://www.themoviedb.org/)
+- **Original**: This was a [Letterboxd](https://letterboxd.com/) website replica
+- **Original API**: [The Movie Database](https://www.themoviedb.org/)
+- **New API**: [Google Places API](https://developers.google.com/maps/documentation/places/web-service)
+- **Transformation**: Converting to restaurant-focused social platform for Waterloo region
+
+## Development Roadmap
+
+See `PLAN.md` for detailed implementation roadmap and `TECHNICAL_DOCUMENTATION.md` for development journal.

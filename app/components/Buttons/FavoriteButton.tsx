@@ -39,7 +39,7 @@ export const FavouriteButton = ({
     const userRef = doc(db, "users", userId);
 
     await updateDoc(userRef, {
-      favourites: arrayUnion({ movieID: id }),
+      favourites: arrayUnion({ restaurantID: id }),
     }).then(() => {
       setIsFavourite(true);
       createFavouritePopup(title, PopupAction.FAVOURITE);
@@ -54,7 +54,7 @@ export const FavouriteButton = ({
     const userId = auth.currentUser.uid;
     const userRef = doc(db, "users", userId);
     await updateDoc(userRef, {
-      favourites: arrayRemove({ movieID: id }),
+      favourites: arrayRemove({ restaurantID: id }),
     }).then(() => {
       setIsFavourite(false);
       createFavouritePopup(title, PopupAction.REMOVED);
@@ -70,13 +70,13 @@ export const FavouriteButton = ({
           height={20}
           alt={
             isFavourite
-              ? "Remove movie from favorites icon"
-              : "Add movie to favorites icon"
+              ? "Remove restaurant from favorites icon"
+              : "Add restaurant to favorites icon"
           }
           aria-label={
             isFavourite
-              ? "Remove movie from favorites list"
-              : "Add movie to favorites list"
+              ? "Remove restaurant from favorites list"
+              : "Add restaurant to favorites list"
           }
         />
       </div>

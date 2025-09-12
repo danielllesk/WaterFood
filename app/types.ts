@@ -1,15 +1,15 @@
 export interface UserReview {
   review: string;
-  movieID: string;
+  restaurantID: string;
   timestamp?: string;
 }
 
 export interface UserFavourite {
-  movieID: string;
+  restaurantID: string;
 }
 
-export interface UserWatched {
-  movieID: string;
+export interface UserAteAt {
+  restaurantID: string;
 }
 
 export interface User {
@@ -18,12 +18,12 @@ export interface User {
   bio: string;
   photoUrl: string;
   favourites: UserFavourite[];
-  watched: UserWatched[];
+  ateAt: UserAteAt[];
   reviews: UserReview[];
 }
 
 export interface Review {
-  movieID: number;
+  restaurantID: string;
   userName: string;
   uid: string;
   userURL: string;
@@ -31,9 +31,12 @@ export interface Review {
   timestamp?: string;
 }
 
-export interface Movie {
+export interface Restaurant {
   id: string;
-  title: string;
-  backdrop_path: string;
-  poster_path: string;
+  name: string;
+  address: string;
+  googleRating: number;
+  appRating: number;
+  photos: string[];
+  place_id: string;
 }
