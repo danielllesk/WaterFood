@@ -37,7 +37,7 @@ export const RestaurantSearchInput = ({ isMobile = false, onClose }: RestaurantS
       if (searchQuery.length >= 3) {
         setIsLoading(true);
         try {
-          const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}&location=Waterloo, ON, Canada`);
+          const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}&location=Waterloo, Kitchener, ON, Canada`);
           const data = await response.json();
           
           if (response.ok && data.results) {

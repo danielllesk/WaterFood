@@ -5,7 +5,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
-  const location = searchParams.get('location') || 'Waterloo, ON, Canada';
+  const location = searchParams.get('location') || 'Waterloo, Kitchener, ON, Canada';
   
   if (!query || query.length < 3) {
     return NextResponse.json({ error: 'Query must be at least 3 characters' }, { status: 400 });
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     }
 
     const googleRes = await fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}&radius=50000&types=restaurant&key=${googleApiKey}`
+      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}&radius=75000&types=restaurant&key=${googleApiKey}`
     );
 
     if (!googleRes.ok) {
