@@ -16,22 +16,22 @@ export const LatestNews = () => {
       <div className="mb-9 flex flex-col pb-9 md:flex-row">
         <Image
           src={
-            "https://a.ltrbxd.com/resized/sm/upload/ym/n6/g5/14/5130362-620-620-348-348-crop-fill.jpg?k=0bcaefc03e"
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
           }
           width={310}
           height={174}
-          alt="latest news post"
+          alt="Waterloo restaurant scene"
           loading="lazy"
           className="w-full rounded
         md:w-[32%]"
         />
         <div className="bg-c-blue md:p-4">
           <h1 className="text-p-white hover:text-hov-blue mt-2  pl-3  text-xl  font-bold tracking-wider  hover:cursor-pointer md:mt-0">
-            Mamma mia!
+            Waterloo Eats!
           </h1>
           <p className="text-sh-grey my-1.5 pl-3">
-            The Letterboxd crew celebrates Mother’s Day 2023 by asking our own
-            moms about their favorite films.
+            The FoodBoxd team explores the vibrant restaurant scene in Waterloo,
+            discovering hidden gems and culinary delights.
             <Link
               href="/journal"
               className="text-p-white hover:text-hov-blue text-[11px] font-bold"
