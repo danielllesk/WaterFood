@@ -36,15 +36,37 @@ export const FavouriteButton = ({
     }
 
     const userId = auth.currentUser.uid;
-    const userRef = doc(db, "users", userId);
 
-    await updateDoc(userRef, {
-      favourites: arrayUnion({ restaurantID: id }),
-    }).then(() => {
-      setIsFavourite(true);
-      createFavouritePopup(title, PopupAction.FAVOURITE);
-    });
+    try {
+      const response = await fetch('/api/favorites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          restaurantId: id,
+          userId: userId,
+          action: 'add'
+        }),
+      });
+
+      if (response.ok) {
+        setIsFavourite(true);
+        createFavouritePopup(title, PopupAction.FAVOURITE);
+      } else {
+        const errorData = await response.json();
+        if (response.status === 400 && errorData.error === 'Maximum of 4 favorites allowed') {
+          createFavouritePopup('Maximum of 4 favorites allowed', PopupAction.ERROR);
+        } else {
+          createFavouritePopup(title, PopupAction.ERROR);
+        }
+      }
+    } catch (error) {
+      console.error('Error adding to favorites:', error);
+      createFavouritePopup(title, PopupAction.ERROR);
+    }
   };
+
   const removeFromFavsDB = async () => {
     if (!auth || !auth.currentUser) {
       createFavouritePopup(title, PopupAction.ERROR);
@@ -52,13 +74,30 @@ export const FavouriteButton = ({
     }
 
     const userId = auth.currentUser.uid;
-    const userRef = doc(db, "users", userId);
-    await updateDoc(userRef, {
-      favourites: arrayRemove({ restaurantID: id }),
-    }).then(() => {
-      setIsFavourite(false);
-      createFavouritePopup(title, PopupAction.REMOVED);
-    });
+
+    try {
+      const response = await fetch('/api/favorites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          restaurantId: id,
+          userId: userId,
+          action: 'remove'
+        }),
+      });
+
+      if (response.ok) {
+        setIsFavourite(false);
+        createFavouritePopup(title, PopupAction.REMOVED);
+      } else {
+        createFavouritePopup(title, PopupAction.ERROR);
+      }
+    } catch (error) {
+      console.error('Error removing from favorites:', error);
+      createFavouritePopup(title, PopupAction.ERROR);
+    }
   };
 
   return (

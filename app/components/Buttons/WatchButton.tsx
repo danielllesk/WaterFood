@@ -37,14 +37,30 @@ export const WatchButton = ({
     }
 
     const userId = auth.currentUser.uid;
-    const userRef = doc(db, "users", userId);
 
-    await updateDoc(userRef, {
-      ateAt: arrayUnion({ restaurantID: id }),
-    }).then(() => {
-      setIsWatched(true);
-      createWatchedPopup(title, PopupAction.WATCHED);
-    });
+    try {
+      const response = await fetch('/api/logs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          restaurantId: id,
+          userId: userId,
+          action: 'add'
+        }),
+      });
+
+      if (response.ok) {
+        setIsWatched(true);
+        createWatchedPopup(title, PopupAction.WATCHED);
+      } else {
+        createWatchedPopup(title, PopupAction.ERROR);
+      }
+    } catch (error) {
+      console.error('Error adding to ate at:', error);
+      createWatchedPopup(title, PopupAction.ERROR);
+    }
   };
 
   const removeFromWatchedDB = async () => {
@@ -54,13 +70,30 @@ export const WatchButton = ({
     }
 
     const userId = auth.currentUser.uid;
-    const userRef = doc(db, "users", userId);
-    await updateDoc(userRef, {
-      ateAt: arrayRemove({ restaurantID: id }),
-    }).then(() => {
-      setIsWatched(false);
-      createWatchedPopup(title, PopupAction.REMOVED);
-    });
+
+    try {
+      const response = await fetch('/api/logs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          restaurantId: id,
+          userId: userId,
+          action: 'remove'
+        }),
+      });
+
+      if (response.ok) {
+        setIsWatched(false);
+        createWatchedPopup(title, PopupAction.REMOVED);
+      } else {
+        createWatchedPopup(title, PopupAction.ERROR);
+      }
+    } catch (error) {
+      console.error('Error removing from ate at:', error);
+      createWatchedPopup(title, PopupAction.ERROR);
+    }
   };
 
   return (
