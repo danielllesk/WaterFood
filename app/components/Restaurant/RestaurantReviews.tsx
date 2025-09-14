@@ -11,11 +11,11 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { createReviewPopup, PopupAction } from "../../utils";
-import { MovieReviewCompact } from "../Review/MovieReviewCompact";
+import { RestaurantReviewCompact } from "../Review/RestaurantReviewCompact";
 import moment from "moment";
 import { Review } from "app/types";
 
-export const MovieReviews = ({ movie }) => {
+export const RestaurantReviews = ({ restaurant }) => {
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState<Review[]>([]);
 
@@ -49,7 +49,7 @@ export const MovieReviews = ({ movie }) => {
 
     await updateDoc(userRef, {
       reviews: arrayUnion({
-        movieID: movie.id,
+        restaurantID: restaurant.id,
         review: review,
         timestamp: getDate(),
       }),
@@ -57,36 +57,36 @@ export const MovieReviews = ({ movie }) => {
   };
 
   /**
-   * Checks if a movie is already stored in DB and saves the review or movie + review
+   * Checks if a restaurant is already stored in DB and saves the review or restaurant + review
    */
   const saveMovieReview = async () => {
     try {
-      const movieDoc = await getDoc(doc(db, "movies/" + movie.id));
+      const restaurantDoc = await getDoc(doc(db, "restaurants/" + restaurant.id));
 
-      if (movieDoc.exists()) {
-        // Add review to existing movie
+      if (restaurantDoc.exists()) {
+        // Add review to existing restaurant
         await addMovieReview();
       } else {
-        // Create a new movie document with the review
+        // Create a new restaurant document with the review
         await addNewMovieDocWithReview();
       }
     } catch (err) {
-      console.error("Error saving movie review:", err);
+      console.error("Error saving restaurant review:", err);
     }
   };
 
   /**
-   * Adds a review on the movie which already exists in the db
+   * Adds a review on the restaurant which already exists in the db
    */
   const addMovieReview = async () => {
     if (!auth.currentUser) return;
 
-    const movieRef = doc(db, "movies/" + movie.id);
+    const restaurantRef = doc(db, "restaurants/" + restaurant.id);
 
     try {
-      await updateDoc(movieRef, {
+      await updateDoc(restaurantRef, {
         reviews: arrayUnion({
-          movieID: movie.id,
+          restaurantID: restaurant.id,
           userName: auth.currentUser.displayName,
           userURL: auth.currentUser.photoURL,
           review: review,
@@ -97,7 +97,7 @@ export const MovieReviews = ({ movie }) => {
 
       createReviewPopup(PopupAction.SUCCESS);
     } catch (err) {
-      console.error("Error updating movie review:", err);
+      console.error("Error updating restaurant review:", err);
     }
   };
 
@@ -105,10 +105,10 @@ export const MovieReviews = ({ movie }) => {
     if (!auth.currentUser) return;
 
     try {
-      await setDoc(doc(db, "movies/" + movie.id), {
+      await setDoc(doc(db, "restaurants/" + restaurant.id), {
         reviews: [
           {
-            movieID: movie.id,
+            restaurantID: restaurant.id,
             review: review,
             userName: auth.currentUser.displayName,
             userURL: auth.currentUser.photoURL,
@@ -118,37 +118,37 @@ export const MovieReviews = ({ movie }) => {
         ],
       });
     } catch (err) {
-      console.error("Error creating new movie document with review:", err);
+      console.error("Error creating new restaurant document with review:", err);
     }
   };
 
   const fetchReviewsByMovie = async () => {
-    const movieDoc = await getDoc(doc(db, "movies/" + movie.id));
-    if (!movieDoc.exists()) {
+    const restaurantDoc = await getDoc(doc(db, "restaurants/" + restaurant.id));
+    if (!restaurantDoc.exists()) {
       setReviews([]);
       return;
     }
-    const movieReviews = movieDoc.data().reviews;
-    if (!movieReviews) {
+    const restaurantReviews = restaurantDoc.data().reviews;
+    if (!restaurantReviews) {
       setReviews([]);
       return;
     }
 
-    setReviews(movieReviews);
+    setReviews(restaurantReviews);
   };
 
   const handleDelete = async (review) => {
     // On the user document, we only store minimal info, and we need a ref. to that to delete as well
     const userProfileReview = {
-      movieID: review.movieID,
+      restaurantID: review.restaurantID,
       review: review.review,
       timestamp: review.timestamp,
     };
 
-    const movieRef = doc(db, "movies", review.movieID.toString());
+    const restaurantRef = doc(db, "restaurants", review.restaurantID.toString());
     const userRef = doc(db, "users", review.uid);
 
-    await updateDoc(movieRef, {
+    await updateDoc(restaurantRef, {
       reviews: arrayRemove(review),
     })
       .then(() => {
@@ -178,7 +178,7 @@ export const MovieReviews = ({ movie }) => {
     <div className="mt-3 flex w-full flex-col justify-between gap-2 md:ml-[6.5rem] md:w-[50%]">
       {reviews.length > 0
         ? reviews.map((r, i) => (
-            <MovieReviewCompact
+            <RestaurantReviewCompact
               key={i}
               review={r}
               handleDelete={handleDelete}

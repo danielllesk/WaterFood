@@ -5,7 +5,7 @@ import { auth, db } from "../../firebase/firebase";
 import { WatchButton } from "../Buttons/WatchButton";
 import FavouriteButton from "../Buttons/FavoriteButton";
 
-export default function MoviePoster({
+export default function RestaurantPoster({
   poster,
   id,
   title,

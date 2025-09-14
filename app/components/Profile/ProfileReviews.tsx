@@ -1,5 +1,5 @@
 import React from "react";
-import { MovieReviewExtended } from "../Review/MovieReviewExtended";
+import { RestaurantReviewExtended } from "../Review/RestaurantReviewExtended";
 import { UserReview } from "app/types";
 
 export const ProfileReviews = ({ reviews }: { reviews: UserReview[] }) => {
@@ -15,7 +15,7 @@ export const ProfileReviews = ({ reviews }: { reviews: UserReview[] }) => {
           </p>
         ) : (
           reviews.map((review, i) => (
-            <MovieReviewExtended key={i} review={review} />
+            <RestaurantReviewExtended key={i} review={review} />
           ))
         )}
       </div>

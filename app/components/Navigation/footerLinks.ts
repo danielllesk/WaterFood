@@ -2,57 +2,57 @@ const footerLinksData = [
   {
     id: "0",
     name: "About",
-    link: "https://letterboxd.com/about/faq/",
+    link: "https://waterloo.foodboxd.com/about",
   },
   {
     id: "1",
     name: "News",
-    link: "https://letterboxd.com/journal/",
+    link: "https://waterloo.foodboxd.com/news",
   },
   {
     id: "id-2",
     name: "Pro",
-    link: "https://letterboxd.com/pro/",
+    link: "https://waterloo.foodboxd.com/pro",
   },
   {
     id: "id-3",
     name: "Apps",
-    link: "https://letterboxd.com/apps/",
+    link: "https://waterloo.foodboxd.com/apps",
   },
   {
     id: "id-4",
     name: "Podcast",
-    link: "https://podcasts.apple.com/us/podcast/the-letterboxd-show/id1498263634?itscg=30200S&itsct=podcast_box",
+    link: "https://waterloo.foodboxd.com/podcast",
   },
   {
     id: "id-5",
     name: "Year In Review",
-    link: "https://letterboxd.com/2022/",
+    link: "https://waterloo.foodboxd.com/year-in-review",
   },
   {
     id: "id-6",
     name: "Gift Guide",
-    link: "https://letterboxd.com/gift-guide/",
+    link: "https://waterloo.foodboxd.com/gift-guide",
   },
   {
     id: "id-7",
     name: "Help",
-    link: "https://letterboxd.com/welcome/",
+    link: "https://waterloo.foodboxd.com/help",
   },
   {
     id: "id-8",
     name: "Terms",
-    link: "https://letterboxd.com/legal/terms-of-use/",
+    link: "https://waterloo.foodboxd.com/terms",
   },
   {
     id: "id-9",
     name: "API",
-    link: "https://letterboxd.com/api-beta/",
+    link: "https://waterloo.foodboxd.com/api",
   },
   {
     id: "id-10",
     name: "Contact",
-    link: "https://letterboxd.com/contact/",
+    link: "https://waterloo.foodboxd.com/contact",
   },
 ];
 

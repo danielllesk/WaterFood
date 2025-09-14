@@ -1,4 +1,4 @@
-export default function MovieBackdrop({ backdrop }: { backdrop: string }) {
+export default function RestaurantBackdrop({ backdrop }: { backdrop: string }) {
   if (backdrop.includes("null"))
     return <div className="mb-[100px] block max-h-[100px] min-h-[100px]"></div>;
 

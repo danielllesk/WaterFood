@@ -5,7 +5,7 @@ import { auth } from "../../firebase/firebase";
 import Link from "next/link";
 import { Review } from "app/types";
 
-export const MovieReviewCompact = ({
+export const RestaurantReviewCompact = ({
   review,
   handleDelete,
 }: {

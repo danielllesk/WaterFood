@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Restaurant, Review, UserReview } from "app/types";
 
-export const MovieReviewExtended = ({
+export const RestaurantReviewExtended = ({
   review,
 }: {
   review: UserReview | Review;

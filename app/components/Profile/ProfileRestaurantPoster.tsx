@@ -6,7 +6,7 @@ import FavouriteButton from "../Buttons/FavoriteButton";
 import { WatchButton } from "../Buttons/WatchButton";
 import { Restaurant, UserFavourite, UserAteAt } from "app/types";
 
-export const ProfileMoviePoster = ({
+export const ProfileRestaurantPoster = ({
   watched,
   favourites,
   movieId,

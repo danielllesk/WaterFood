@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export const MovieCast = ({ actors }) => {
+export const RestaurantCast = ({ actors }) => {
   const [cast, setCast] = useState<string[]>([]);
 
   const getCast = () => {
@@ -44,4 +44,4 @@ export const MovieCast = ({ actors }) => {
     </>
   );
 };
-export default MovieCast;
+export default RestaurantCast;

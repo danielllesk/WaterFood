@@ -5,7 +5,7 @@ const socialLinksData = [
     name: "Twitter",
     width: 20,
     height: 16,
-    link: "https://twitter.com/letterboxd",
+    link: "https://twitter.com/foodboxd",
   },
   {
     id: "1",
@@ -13,7 +13,7 @@ const socialLinksData = [
     name: "Facebook",
     width: 19,
     height: 19,
-    link: "https://www.facebook.com/letterboxd",
+    link: "https://www.facebook.com/foodboxd",
   },
   {
     id: "2",
@@ -21,7 +21,7 @@ const socialLinksData = [
     name: "Instagram",
     width: 20,
     height: 20,
-    link: "https://www.instagram.com/letterboxd/",
+    link: "https://www.instagram.com/foodboxd/",
   },
   {
     id: "3",
@@ -29,7 +29,7 @@ const socialLinksData = [
     name: "Youtube",
     width: 23,
     height: 16,
-    link: "https://www.youtube.com/letterboxdhq",
+    link: "https://www.youtube.com/foodboxd",
   },
   {
     id: "4",
@@ -37,7 +37,7 @@ const socialLinksData = [
     name: "TikTok",
     width: 17,
     height: 18,
-    link: "https://www.tiktok.com/@letterboxd",
+    link: "https://www.tiktok.com/@foodboxd",
   },
 ];
 

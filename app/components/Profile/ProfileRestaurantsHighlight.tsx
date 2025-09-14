@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useEffect, useState } from "react";
-import { ProfileMoviePoster } from "./ProfileMoviePoster";
+import { ProfileRestaurantPoster } from "./ProfileRestaurantPoster";
 import Link from "next/link";
 import { User, UserFavourite, UserAteAt } from "app/types";
 
-export const ProfileMoviesHighlight = ({
+export const ProfileRestaurantsHighlight = ({
   user,
   movies,
   watched,
@@ -49,7 +49,7 @@ export const ProfileMoviesHighlight = ({
 
         {movieIds.length > 0 &&
           movieIds.map((id) => (
-            <ProfileMoviePoster
+            <ProfileRestaurantPoster
               key={id}
               watched={watched}
               favourites={favourites}
