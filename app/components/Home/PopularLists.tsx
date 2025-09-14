@@ -1,8 +1,8 @@
 import React from "react";
 import { PopularListSet } from "./PopularListSet";
 
-export const PopularLists = ({ movies }: { movies: any }) => {
-  if (!movies) return null;
+export const PopularLists = ({ restaurants }: { restaurants: any }) => {
+  if (!restaurants) return null;
 
   return (
     <>
@@ -15,9 +15,9 @@ export const PopularLists = ({ movies }: { movies: any }) => {
         </p>
       </div>
       <div className="flex flex-col justify-between md:flex-row">
-        <PopularListSet movies={movies.slice(0, 6)} start={1} end={6} />
-        <PopularListSet movies={movies.slice(7, 13)} start={7} end={13} />
-        <PopularListSet movies={movies.slice(14, 21)} start={14} end={20} />
+        <PopularListSet restaurants={restaurants.slice(0, 6)} start={1} end={6} />
+        <PopularListSet restaurants={restaurants.slice(7, 13)} start={7} end={13} />
+        <PopularListSet restaurants={restaurants.slice(14, 21)} start={14} end={20} />
       </div>
       <span className="mb-10"></span>
     </>

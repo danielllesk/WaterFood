@@ -14,11 +14,11 @@ export const IntroMessage = ({ user }: { user: any }) => {
         </Link>
         .{" "}
         <span className="hidden pb-2 md:inline-block">
-          Start your movie tracking journey now!
+          Start your restaurant discovery journey now!
         </span>
       </div>
       <p className="text-h-grey mb-8 text-center text-lg md:mb-8">
-        On Clonnerboxd you can...{" "}
+        On FoodBoxd you can...{" "}
         <Link
           href={"/profile/" + user.uid}
           className="text-p-white hover:text-hov-blue"
@@ -30,8 +30,8 @@ export const IntroMessage = ({ user }: { user: any }) => {
           See the registed members
         </Link>
         {" | "}
-        <Link href="/films" className="text-p-white hover:text-hov-blue">
-          Filter movies based on your criteria
+        <Link href="/restaurants" className="text-p-white hover:text-hov-blue">
+          Discover restaurants in your area
         </Link>
         {" | "}
         <Link href="/reviews" className="text-p-white hover:text-hov-blue">
@@ -40,7 +40,7 @@ export const IntroMessage = ({ user }: { user: any }) => {
         <span className="text-h-grey">
           {" "}
           or press the search icon in the header, and leave a review to your
-          favorite movie!
+          favorite restaurant!
         </span>
       </p>
     </>

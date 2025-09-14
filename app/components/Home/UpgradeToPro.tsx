@@ -3,27 +3,26 @@ import Link from "next/link";
 import React from "react";
 
 export const UpgradeToPro = () => {
-  let url =
-    "https://a.ltrbxd.com/resized/sm/upload/j8/gt/r8/ss/pro-950-0-950-0-0.png?k=bc62c7df04";
-  let mobileUrl =
-    "https://a.ltrbxd.com/sm/upload/1n/js/vs/bi/pro-mobile.png?k=8ce50124d8";
+  // Placeholder URLs - replace with FoodBoxd Pro banners when ready
+  let url = "/assets/pro-banner-desktop.png";
+  let mobileUrl = "/assets/pro-banner-mobile.png";
   return (
     <>
-      <Link href="https://letterboxd.com/pro/?utm_medium=banner&utm_campaign=get-pro">
+      <Link href="https://waterloo.foodboxd.com/pro">
         <Image
           className="mb-8 block self-center md:hidden"
           src={mobileUrl}
           width={100}
           height={100}
-          alt="upgrade to pro banner"
+          alt="upgrade to FoodBoxd pro banner"
           loading="lazy"
         />
       </Link>
-      <Link href="https://letterboxd.com/pro/?utm_medium=banner&utm_campaign=get-pro">
+      <Link href="https://waterloo.foodboxd.com/pro">
         <Image
           className="mb-8 hidden self-center md:block"
           src={url}
-          alt="upgrade to pro banner"
+          alt="upgrade to FoodBoxd pro banner"
           height={100}
           width={950}
           loading="lazy"
