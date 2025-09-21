@@ -20,6 +20,7 @@ export interface User {
   favourites: UserFavourite[];
   ateAt: UserAteAt[];
   reviews: UserReview[];
+  following: string[]; // array of userIds
 }
 
 export interface Review {

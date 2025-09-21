@@ -11,27 +11,31 @@ export default function Page({ searchParams }: { searchParams: any }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [movies, setMovies] = useState<any[] | null>();
+  const [restaurants, setRestaurants] = useState<any[] | null>();
 
-  const fetchMoviesBySearchTerm = async () => {
+  const fetchRestaurantsBySearchTerm = async () => {
     setIsLoading(true);
 
-    const res = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${searchTerm}`
-    );
+    try {
+      // Use our Google Places API search endpoint
+      const res = await fetch(`/api/search?query=${encodeURIComponent(searchTerm)}&location=Waterloo, Kitchener, ON, Canada&radius=75000`);
 
-    if (!res.ok) {
-      console.error("error fetching movies with your search term");
-      setIsLoading(false);
-      return;
+      if (!res.ok) {
+        console.error("error fetching restaurants with your search term");
+        setIsLoading(false);
+        return;
+      }
+
+      const data = await res.json();
+
+      // Filter restaurants that have photos
+      const validRestaurantResults = (data.results || []).filter((restaurant) => restaurant.photos && restaurant.photos.length > 0);
+
+      setRestaurants(validRestaurantResults);
+    } catch (error) {
+      console.error("Error fetching restaurants:", error);
+      setRestaurants([]);
     }
-
-    const data = await res.json();
-
-    // skip those that don't have an image
-    const validMovieResults = data.results.filter((movie) => movie.poster_path !== null);
-
-    setMovies(validMovieResults);
 
     setIsLoading(false);
   };
@@ -48,7 +52,7 @@ export default function Page({ searchParams }: { searchParams: any }) {
 
   useEffect(() => {
     if (searchTerm) {
-      fetchMoviesBySearchTerm();
+      fetchRestaurantsBySearchTerm();
     }
   }, [searchTerm]);
 
@@ -59,7 +63,7 @@ export default function Page({ searchParams }: { searchParams: any }) {
         <div className="px-4 font-['Graphik'] md:mx-auto md:my-0 md:flex md:w-[950px] md:flex-col">
           {isLoading && <p className="text-base text-sh-grey">Loading..</p>}
 
-          {movies && <FilterResults movies={movies} />}
+          {restaurants && <FilterResults restaurants={restaurants} />}
         </div>
 
         <Footer />

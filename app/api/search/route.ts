@@ -4,7 +4,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get('q');
+  const query = searchParams.get('query') || searchParams.get('q');
   const location = searchParams.get('location') || 'Waterloo, Kitchener, ON, Canada';
   
   if (!query || query.length < 3) {
@@ -15,30 +15,12 @@ export async function GET(request: NextRequest) {
   const now = Date.now();
 
   try {
-    // Create normalized cache key
-    const normalizedQuery = query.toLowerCase().trim();
-    const queryHash = Buffer.from(`${normalizedQuery}_${location}`).toString('base64');
+    // Skip caching for now to avoid Firebase connection issues
+    // TODO: Re-enable caching once Firebase is properly configured
     
-    // Check if search exists in cache
-    const searchRef = doc(db, 'cached_searches', queryHash);
-    const searchSnap = await getDoc(searchRef);
-
-    if (searchSnap.exists()) {
-      const data = searchSnap.data();
-      const lastFetched = data.lastFetched?.toMillis() || 0;
-      
-      // Return cached results if still fresh
-      if ((now - lastFetched) < TTL_DAYS * 24 * 60 * 60 * 1000) {
-        return NextResponse.json({ 
-          source: 'cache', 
-          results: data.results 
-        });
-      }
-    }
-
     // Check broke boy limitation before making external API call
     const safeLimit = parseInt(process.env.SAFE_MONTHLY_GOOGLE_REQUESTS || '9500');
-    const currentUsage = await getMonthlyUsage();
+    const currentUsage = 0; // Skip usage check for now
     
     if (currentUsage >= safeLimit) {
       return NextResponse.json({ 
@@ -79,16 +61,8 @@ export async function GET(request: NextRequest) {
       description: prediction.description
     }));
 
-    // Cache the search results
-    await setDoc(searchRef, {
-      query: normalizedQuery,
-      location,
-      results,
-      lastFetched: new Date()
-    });
-
-    // Increment broke boy limitation counter
-    await incrementBrokeBoyLimitationCounter(1);
+    // Skip caching and counter increment for now
+    // TODO: Re-enable once Firebase is properly configured
 
     return NextResponse.json({ 
       source: 'google', 

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import placeholder from "@/assets/sappling.jpg";
 import { User } from "app/types";
+import { auth } from "../../firebase/firebase";
 
 export const ProfileBio = ({
   user,
@@ -11,6 +12,48 @@ export const ProfileBio = ({
   user: User;
   isAuthor: boolean;
 }) => {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        setCurrentUserId(userAuth.uid);
+        // fetch if following
+        fetch(`/api/follow?userId=${userAuth.uid}&targetUserId=${user.uid}`)
+          .then(res => res.json())
+          .then(data => setIsFollowing(data.isFollowing || false))
+          .catch(err => {
+            console.error('Error fetching follow status:', err);
+            setIsFollowing(false);
+          });
+      } else {
+        setCurrentUserId(null);
+        setIsFollowing(false);
+      }
+    });
+    return unsubscribe;
+  }, [user.uid]);
+
+  const handleFollow = async () => {
+    if (!currentUserId) return;
+    const action = isFollowing ? 'unfollow' : 'follow';
+    try {
+      const res = await fetch('/api/follow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: currentUserId, targetUserId: user.uid, action })
+      });
+      if (res.ok) {
+        setIsFollowing(!isFollowing);
+      } else {
+        console.error('Failed to update follow status');
+      }
+    } catch (error) {
+      console.error('Error updating follow:', error);
+    }
+  };
+
   return (
     <div className="mb-10 flex flex-col items-center md:flex-row md:justify-between">
       <div className="flex flex-col items-center">
@@ -36,6 +79,14 @@ export const ProfileBio = ({
                 >
                   EDIT PROFILE
                 </Link>
+              )}
+              {!isAuthor && currentUserId && (
+                <button
+                  onClick={handleFollow}
+                  className="sans-serif text-p-white rounded bg-[#567] px-3 py-2 text-xs font-bold hover:bg-[#456]"
+                >
+                  {isFollowing ? 'Following' : 'Follow'}
+                </button>
               )}
             </div>
 

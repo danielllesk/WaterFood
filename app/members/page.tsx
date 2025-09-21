@@ -40,7 +40,7 @@ export default function Page() {
       <div className="site-body min-h-[80vh] py-5">
         <div className="flex flex-col px-4 font-['Graphik'] md:mx-auto md:my-0 md:w-[950px]">
           <div className="section-heading border-b-grey text-sh-grey mb-3 flex justify-between border-b border-solid text-xs">
-            <p>MEMBERS OF CLONNERBOXD</p>
+            <p>MEMBERS OF FOODBOXD</p>
             {users.length > 0 && <p>{users.length} total members</p>}
           </div>
           {isLoading && <p>Loading users...</p>}

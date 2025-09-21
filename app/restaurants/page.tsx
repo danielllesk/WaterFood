@@ -4,7 +4,7 @@ import React, { Usable, use, useEffect, useState } from "react";
 
 import filterOptions from "./filtering/arrays";
 import { Filter } from "app/components/Filter/Filter";
-import { PopularMovies } from "app/components/Home/PopularMovies";
+import { PopularRestaurants } from "app/components/Home/PopularRestaurants";
 import { FilterResults } from "app/components/Filter/FilterResults";
 import { useRouter } from "next/navigation";
 import { Footer } from "app/components/Navigation/Footer";
@@ -19,7 +19,7 @@ export default function Page() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [filterResults, setFilterResults] = useState<any[] | null>(null);
-  const [popularMovies, setPopularMovies] = useState<any[] | null>(null);
+  const [popularRestaurants, setPopularRestaurants] = useState<any[] | null>(null);
 
   useEffect(() => {
     const initialFilters: { [key: string]: string } = {};
@@ -39,24 +39,29 @@ export default function Page() {
     }
 
     const queryString = new URLSearchParams(updated).toString();
-    const newUrl = queryString ? `/films?${queryString}` : "/films";
+    const newUrl = queryString ? `/restaurants?${queryString}` : "/restaurants";
     router.push(newUrl);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       if (Object.keys(activeFilters).length === 0) {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-        );
-        const data = await res.json();
-        setPopularMovies(data.results);
-        setFilterResults(null);
+        try {
+          // Use our Google Places API search endpoint
+          const res = await fetch('/api/search?query=restaurants&location=Waterloo, Kitchener, ON, Canada&radius=75000');
+          const data = await res.json();
+          setPopularRestaurants(data.results || []);
+          setFilterResults(null);
+        } catch (error) {
+          console.error("Error fetching popular restaurants:", error);
+          setPopularRestaurants([]);
+        }
         setIsLoading(false);
         return;
       }
 
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&vote_count.gte=100`;
+      // TODO: Implement restaurant filtering with Google Places API
+      let url = '';
 
       if (activeFilters.genres) {
         const genreRes = await fetch(
@@ -90,11 +95,11 @@ export default function Page() {
         const data = await res.json();
         const filtered = data.results?.filter((m: any) => m.poster_path !== null) || [];
         setFilterResults(filtered);
-        setPopularMovies(null);
+        setPopularRestaurants(null);
       } catch (error) {
-        console.error("Error fetching movies:", error);
+        console.error("Error fetching restaurants:", error);
         setFilterResults([]);
-        setPopularMovies(null);
+        setPopularRestaurants(null);
       }
       setIsLoading(false);
     };
@@ -144,7 +149,7 @@ export default function Page() {
             {Object.keys(activeFilters).length > 0 && (
               <div>
                 <button
-                  onClick={() => router.push("/films")}
+                  onClick={() => router.push("/restaurants")}
                   className="hover:text-blue-800 text-sh-grey hover:underline"
                 >
                   Clear all filters
@@ -154,8 +159,8 @@ export default function Page() {
           </div>
 
           {isLoading && <p className="text-base text-sh-grey">Loading..</p>}
-          {!isLoading && popularMovies && <PopularMovies movies={popularMovies} />}
-          {!isLoading && filterResults && <FilterResults movies={filterResults} />}
+          {!isLoading && popularRestaurants && <PopularRestaurants restaurants={popularRestaurants} />}
+          {!isLoading && filterResults && <FilterResults restaurants={filterResults} />}
         </div>
       </div>
       <Footer />

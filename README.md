@@ -1,4 +1,4 @@
-# WaterFood - Social Restaurant Discovery Platform
+# FoodBoxd - Social Restaurant Discovery Platform
 
 ## Project's Scope
 
@@ -19,9 +19,9 @@
 
 ### Original Demo (Letterboxd Clone)
 
-![Gif preview of the Clonnerboxd](./assets/clonnerboxd-preview-desktop.gif)
+![Gif preview of FoodBoxd](./assets/clonnerboxd-preview-desktop.gif)
 
-![Gif preview of the Clonnerboxd on mobile](./assets/clonnerboxd-mobile-preview.gif)
+![Gif preview of FoodBoxd on mobile](./assets/clonnerboxd-mobile-preview.gif)
 
 ## Getting Started
 
@@ -56,7 +56,7 @@ npm run dev
 
 ## Project Details & Description
 
-### Current State (Letterboxd Clone)
+### Current State (FoodBoxd)
 - On **Homepage** you can see the current popular movies, fetched from [The Movie Database](https://www.themoviedb.org/).
 - On **Profile** you can see what movies you liked and watched, as well as your most recent reviews.
 - On **Films** page you can filter by different browsing categories: years, ratings and genres!
@@ -65,7 +65,7 @@ npm run dev
 - On **Settings** you can edit your display name and your bio (which will update your profile).
 - In the navbar you can **search** for any movie to add to your collection.
 
-### Planned Features (WaterFood)
+### Planned Features (FoodBoxd)
 - **Restaurant Discovery**: Search and discover restaurants in Waterloo region
 - **Social Logging**: Log "Ate At" restaurants, maintain "To Try" lists
 - **Dual Ratings**: Display both Google ratings and community app ratings

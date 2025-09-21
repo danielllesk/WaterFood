@@ -6,7 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "app/firebase/firebase";
 import { ProfileBio } from "app/components/Profile/ProfileBio";
 import { LayoutNavbar } from "app/components/Navigation/LayoutNavbar";
-import { ProfileMoviesHighlight } from "app/components/Profile/ProfileMoviesHighlight";
+import { ProfileRestaurantsHighlight } from "app/components/Profile/ProfileRestaurantsHighlight";
 import { ProfileReviews } from "app/components/Profile/ProfileReviews";
 import { User, UserFavourite, UserReview, UserAteAt } from "app/types";
 import { Footer } from "app/components/Navigation/Footer";
@@ -73,7 +73,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
           <ProfileBio user={user} isAuthor={isAuthor} />
           <div className="flex flex-col gap-4 md:flex-row md:justify-between">
             <div>
-              <ProfileMoviesHighlight
+              <ProfileRestaurantsHighlight
                 user={user}
                 movies={favourites}
                 watched={watched}
@@ -82,7 +82,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                 onEvent={onEvent}
               />
 
-              <ProfileMoviesHighlight
+              <ProfileRestaurantsHighlight
                 user={user}
                 movies={watched}
                 watched={watched}

@@ -6,28 +6,28 @@ import { LayoutNavbar } from "app/components/Navigation/LayoutNavbar";
 import { db } from "app/firebase/firebase";
 import { Review } from "app/types";
 import { Footer } from "app/components/Navigation/Footer";
-import { MovieReviewExtended } from "app/components/Review/MovieReviewExtended";
-import { MovieReviewCompact } from "app/components/Review/MovieReviewCompact";
+import { RestaurantReviewExtended } from "app/components/Review/RestaurantReviewExtended";
+import { RestaurantReviewCompact } from "app/components/Review/RestaurantReviewCompact";
 import Link from "next/link";
 import Image from "next/image";
 import { SkeletonLoaderReview } from "app/components/Review/SkeletonLoaderReview";
 
 // @to-do infinite scrolling
-// @to-do sort by user, movie, etc..
+// @to-do sort by user, restaurant, etc..
 // @to-do maybeeee accordions based on users?
 export default function Page() {
   const numberOfReviewsPerLoad = 6;
   const [isLoadingMoreReviews, setIsLoadingMoreReviews] = useState(false);
 
-  const [movieMap, setMovieMap] = useState({});
+  const [restaurantMap, setRestaurantMap] = useState({});
 
   const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [allReviews, setAllReviews] = useState<Review[]>([]);
 
   const fetchAllReviews = async () => {
-    const movieDocs = await getDocs(collection(db, "movies"));
-    const reviews = movieDocs.docs.flatMap(
+    const restaurantDocs = await getDocs(collection(db, "restaurants"));
+    const reviews = restaurantDocs.docs.flatMap(
       (doc) => doc.data().reviews
     ) as Review[];
 
@@ -35,7 +35,7 @@ export default function Page() {
       (a, b) => toDate(b?.timestamp).getTime() - toDate(a?.timestamp).getTime()
     );
 
-    const movieIds = [...new Set(reviews.map((review) => review.restaurantID))];
+    const restaurantIds = [...new Set(reviews.map((review) => review.restaurantID))];
 
     setAllReviews(sorted);
     // initial 6 reviews
@@ -43,35 +43,35 @@ export default function Page() {
 
     setIsLoading(false);
 
-    fetchMoviesDetails(movieIds);
+    fetchRestaurantDetails(restaurantIds);
   };
 
-  const fetchMoviesDetails = async (movieIds: string[]) => {
+  const fetchRestaurantDetails = async (restaurantIds: string[]) => {
     setIsLoading(true);
     try {
-      const movieData = await Promise.all(
-        movieIds.map(async (id) => {
+      const restaurantData = await Promise.all(
+        restaurantIds.map(async (id) => {
           const res = await fetch(
             `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&append_to_response=credits`
           );
           if (!res.ok) {
-            throw new Error(`Failed to fetch movie with ID: ${id}`);
+            throw new Error(`Failed to fetch restaurant with ID: ${id}`);
           }
           const data = await res.json();
           return { id, data };
         })
       );
 
-      // Store the movie details in the state
-      const movieMap: { [key: number]: any } = {};
-      movieData.forEach(({ id, data }) => {
-        movieMap[id] = data;
+      // Store the restaurant details in the state
+      const restaurantMap: { [key: string]: any } = {};
+      restaurantData.forEach(({ id, data }) => {
+        restaurantMap[id] = data;
       });
 
-      setMovieMap(movieMap);
+      setRestaurantMap(restaurantMap);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching movie details:", error);
+      console.error("Error fetching restaurant details:", error);
       setIsLoading(false);
     }
   };
@@ -129,7 +129,7 @@ export default function Page() {
       <div className="site-body pt-5">
         <div className="flex min-h-[80vh] flex-col px-4 font-['Graphik'] md:mx-auto md:my-0 md:w-[950px]">
           <div className="border-b-grey text-sh-grey mb-3 flex justify-between border-b border-solid text-sm">
-            <p>REVIEWS OF CLONNERBOXD</p>
+            <p>REVIEWS OF FOODBOXD</p>
 
             {isLoading && <p className="text-sh-grey text-base">Loading...</p>}
             {!isLoading && (
@@ -157,24 +157,24 @@ export default function Page() {
                   className="border-sh-grey/10 bg-review-bg/30 my-2 flex w-full justify-between gap-4 rounded-md border border-solid p-2"
                   key={i}
                 >
-                  <MovieReviewCompact review={review} key={i} />
+                  <RestaurantReviewCompact review={review} key={i} />
 
-                  {movieMap[review.restaurantID] && (
+                  {restaurantMap[review.restaurantID] && (
                     <div className="flex flex-col items-end justify-end">
                       <Link
                         href={"/restaurant/" + review.restaurantID}
                         className="text-sh-grey hover:text-hov-blue pb-2"
                       >
-                        {movieMap[review.restaurantID].name}
+                        {restaurantMap[review.restaurantID].name}
                       </Link>
                       <Link href={"/restaurant/" + review.restaurantID}>
                         <Image
                           className="block max-h-[120px] max-w-[80px] rounded border"
                           src={
-                            movieMap[review.restaurantID]?.photos?.[0] || "/placeholder-restaurant.jpg"
+                            restaurantMap[review.restaurantID]?.photos?.[0] || "/placeholder-restaurant.jpg"
                           }
                           alt={
-                            "Restaurant title for" + movieMap[review.restaurantID]?.name
+                            "Restaurant title for" + restaurantMap[review.restaurantID]?.name
                           }
                           height={300}
                           width={300}

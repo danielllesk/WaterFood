@@ -5,7 +5,7 @@ import "./globals.css";
 import "./reset.css";
 
 export const metadata: Metadata = {
-  title: "WaterFood • Social restaurant discovery",
+  title: "FoodBoxd • Social restaurant discovery",
   description: "Social restaurant logging and discovery platform for Waterloo",
 };
 

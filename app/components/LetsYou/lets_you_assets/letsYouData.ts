@@ -9,13 +9,13 @@ const letsYouData = [
   {
     id: "0",
     icon: Watch,
-    text: "Keep track of every film you’ve ever watched (or just start from the day you join)",
+    text: "Keep track of every restaurant you’ve visited (or just start from the day you join)",
     bgColor: "#00C030",
   },
   {
     id: "1",
     icon: Love,
-    text: "Show some love for your favorite films, lists and reviews with a “like”",
+    text: "Show some love for your favorite restaurants, lists and reviews with a “like”",
     bgColor: "#EE7000",
   },
 
@@ -29,19 +29,19 @@ const letsYouData = [
   {
     id: "3",
     icon: Star,
-    text: "Rate each film on a five-star scale (with halves) to record and share your reaction",
+    text: "Rate each restaurant on a five-star scale (with halves) to record and share your reaction",
     bgColor: "#00C030",
   },
   {
     id: "4",
     icon: Diary,
-    text: "Keep a diary of your film watching (and upgrade to PRO for comprehensive stats)",
+    text: "Keep a diary of your restaurant visits (and upgrade to PRO for comprehensive stats)",
     bgColor: "#EE7000",
   },
   {
     id: "5",
     icon: Lists,
-    text: "Compile and share lists of films on any topic and keep a watchlist of films to see",
+    text: "Compile and share lists of restaurants on any topic and keep a to-try list of restaurants to visit",
     bgColor: "#209CE4",
   },
 ];

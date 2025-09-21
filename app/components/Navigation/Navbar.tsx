@@ -37,6 +37,11 @@ const menuLinks = [
     name: "REVIEWS",
     href: "/reviews",
   },
+  {
+    id: 5,
+    name: "FEED",
+    href: "/feed",
+  },
 ];
 
 const Navbar = ({ userName, profilePic, isLoggedIn, isTransparentNav }) => {
@@ -92,7 +97,7 @@ const Navbar = ({ userName, profilePic, isLoggedIn, isTransparentNav }) => {
             width={60}
             height={42}
             className="block md:hidden"
-            alt="letterboxd mobile logo"
+            alt="FoodBoxd mobile logo"
           />
         </Link>
 
@@ -103,7 +108,7 @@ const Navbar = ({ userName, profilePic, isLoggedIn, isTransparentNav }) => {
             width={200}
             height={25}
             className="hidden md:block"
-            alt="clonnerboxd browser logo"
+            alt="FoodBoxd browser logo"
           />
         </Link>
         <div className="flex items-center">

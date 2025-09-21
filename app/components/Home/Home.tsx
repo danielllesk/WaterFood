@@ -16,8 +16,6 @@ export const Home = ({ restaurants, user }: { restaurants: any; user: any }) => 
       </div>
       <div className="site-content flex flex-col px-4 font-['Graphik'] md:mx-auto md:my-0 md:w-[950px] md:py-8">
         <PopularLists restaurants={restaurants} />
-        <LatestNews />
-        <RecentStories />
       </div>
     </div>
   );

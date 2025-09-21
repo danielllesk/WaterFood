@@ -9,23 +9,24 @@ import { Footer } from "./components/Navigation/Footer";
 
 export default function Page() {
   const [user, setUser] = useState<any>();
-  const [movies, setMovies] = useState<any>();
+  const [restaurants, setRestaurants] = useState<any>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const fetchPopularRestaurants = async () => {
-    // TODO: Replace with Google Places API call
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-    );
+    try {
+      // Use our Google Places API search endpoint
+      const res = await fetch('/api/search?query=restaurants&location=Waterloo, Kitchener, ON, Canada&radius=75000');
+      
+      if (!res.ok) {
+        console.error("error fetching popular restaurants");
+        return;
+      }
 
-    if (!res.ok) {
-      console.error("error fetching popular restaurants");
-      return;
+      const data = await res.json();
+      setRestaurants(data.results || []);
+    } catch (error) {
+      console.error("Error fetching popular restaurants:", error);
     }
-
-    const data = await res.json();
-
-    setMovies(data.results); // TODO: Rename to restaurants
   };
 
   useEffect(() => {
@@ -43,9 +44,9 @@ export default function Page() {
   return (
     <>
       <LayoutNavbar />
-      {isLoggedIn && <Home movies={movies} user={user} />}
+      {isLoggedIn && <Home restaurants={restaurants} user={user} />}
 
-      {!isLoggedIn && <HomeSignedOut movies={movies} />}
+      {!isLoggedIn && <HomeSignedOut restaurants={restaurants} />}
 
       <Footer />
     </>

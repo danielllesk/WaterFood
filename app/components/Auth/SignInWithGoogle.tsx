@@ -44,8 +44,9 @@ export const SignInWithGoogle = () => {
       bio: "My restaurant discovery journey, on FoodBoxd :)",
       photoUrl: auth.currentUser.photoURL,
       reviews: [],
-      watched: [],
+      ateAt: [],
       favourites: [],
+      following: [],
     }).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;

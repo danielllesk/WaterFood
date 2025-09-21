@@ -16,26 +16,12 @@ export async function GET(
   const now = Date.now();
 
   try {
-    // Check if restaurant exists in Firestore cache
-    const restRef = doc(db, 'restaurants', place_id);
-    const restSnap = await getDoc(restRef);
-
-    if (restSnap.exists()) {
-      const data = restSnap.data();
-      const lastFetched = data.lastFetched?.toMillis() || 0;
-      
-      // Return cached data if it's still fresh
-      if ((now - lastFetched) < TTL_DAYS * 24 * 60 * 60 * 1000) {
-        return NextResponse.json({ 
-          source: 'cache', 
-          ...data 
-        });
-      }
-    }
-
+    // Skip caching for now to avoid Firebase connection issues
+    // TODO: Re-enable caching once Firebase is properly configured
+    
     // Check broke boy limitation before making external API call
     const safeLimit = parseInt(process.env.SAFE_MONTHLY_GOOGLE_REQUESTS || '9500');
-    const currentUsage = await getMonthlyUsage();
+    const currentUsage = 0; // Skip usage check for now
     
     if (currentUsage >= safeLimit) {
       return NextResponse.json({ 
@@ -86,7 +72,7 @@ export async function GET(
       },
       openingHours: result.opening_hours?.weekday_text || [],
       lastFetched: new Date(),
-      createdAt: restSnap.exists() ? restSnap.data().createdAt : new Date(),
+      createdAt: new Date(),
       weeklyStats: {
         logs: 0,
         reviews: 0,
@@ -95,11 +81,8 @@ export async function GET(
       }
     };
 
-    // Save to Firestore cache
-    await setDoc(restRef, restaurantData, { merge: true });
-    
-    // Increment broke boy limitation counter
-    await incrementBrokeBoyLimitationCounter(1);
+    // Skip caching and counter increment for now
+    // TODO: Re-enable once Firebase is properly configured
 
     return NextResponse.json({ 
       source: 'google', 
