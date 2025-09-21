@@ -19,11 +19,12 @@ export default function Page() {
     const userDocs = await getDocs(collection(db, "users"));
     const users = userDocs.docs.map((doc) => doc.data()) as User[];
 
+    // Sort by restaurant activity (reviews + ate at + favorites)
     const sorted = users.sort((a, b) => {
-      if (a.name.includes("Jana")) return -1;
-      if (b.name.includes("Jana")) return 1;
-
-      return 1;
+      const aActivity = (a.reviews?.length || 0) + (a.ateAt?.length || 0) + (a.favourites?.length || 0);
+      const bActivity = (b.reviews?.length || 0) + (b.ateAt?.length || 0) + (b.favourites?.length || 0);
+      
+      return bActivity - aActivity; // Sort by highest activity first
     });
 
     setUsers(sorted);

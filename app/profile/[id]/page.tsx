@@ -8,6 +8,7 @@ import { ProfileBio } from "app/components/Profile/ProfileBio";
 import { LayoutNavbar } from "app/components/Navigation/LayoutNavbar";
 import { ProfileRestaurantsHighlight } from "app/components/Profile/ProfileRestaurantsHighlight";
 import { ProfileReviews } from "app/components/Profile/ProfileReviews";
+import { FourFavorites } from "app/components/Profile/FourFavorites";
 import { User, UserFavourite, UserReview, UserAteAt } from "app/types";
 import { Footer } from "app/components/Navigation/Footer";
 
@@ -71,6 +72,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       <div className="site-body min-h-[78vh] py-5">
         <div className="flex flex-col px-4 font-['Graphik'] md:mx-auto md:my-0 md:w-[950px] md:py-8">
           <ProfileBio user={user} isAuthor={isAuthor} />
+          <FourFavorites userId={user.uid} isOwner={isAuthor} />
           <div className="flex flex-col gap-4 md:flex-row md:justify-between">
             <div>
               <ProfileRestaurantsHighlight
