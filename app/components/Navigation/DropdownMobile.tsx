@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SignInWithGoogle } from "../Auth/SignInWithGoogle";
-import { SignInWithDemo } from "../Auth/SignInWithDemo";
 import { SignOut } from "../Auth/SignOut";
 import { auth } from "../../firebase/firebase";
 
@@ -79,9 +78,8 @@ export const DropdownMobile = ({ userName, profilePic }) => {
             <SignOut />
           </li>
         ) : (
-          <li className="grid grid-cols-2 pt-3">
+          <li className="grid grid-cols-1 pt-3">
             <SignInWithGoogle />
-            <SignInWithDemo />
           </li>
         )}
       </ul>
