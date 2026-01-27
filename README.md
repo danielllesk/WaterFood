@@ -11,11 +11,7 @@
 
 ## Development Status
 
-**Currently in Sprint 0**: Environment setup and documentation
-- ✅ Created `.gitignore` and `.env.example`
-- ✅ Set up technical documentation
-- 🔄 Testing baseline functionality
-- 📋 Next: Sprint 1 - Terminology refactoring (movies → restaurants)
+**Currently building**
 
 ### Original Demo (Letterboxd Clone)
 
